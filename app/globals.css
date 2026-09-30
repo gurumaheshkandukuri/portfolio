@@ -1,0 +1,279 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==========================================================================
+   DESIGN TOKENS — LIGHT THEME (PRIMARY) & DARK THEME (SECONDARY)
+   Source of truth: reference/assets/design/portfolio-reference.png
+   ========================================================================== */
+
+:root,
+[data-theme="light"] {
+  --color-background: #F5F1E8;
+  --color-background-rgb: 245 241 232;
+  --color-surface: #EBE4D4;
+  --color-surface-rgb: 235 228 212;
+  --color-text-primary: #1A1815;
+  --color-text-primary-rgb: 26 24 21;
+  --color-text-muted: #6B6355;
+  --color-text-muted-rgb: 107 99 85;
+  --color-accent: #D2691E;
+  --color-accent-rgb: 210 105 30;
+  --color-secondary: #4A6B5C;
+  --color-secondary-rgb: 74 107 92;
+
+  /* Editorial hairline dividers derived strictly from primary text tone */
+  --color-border: rgba(26, 24, 21, 0.12);
+  --color-border-strong: rgba(26, 24, 21, 0.24);
+
+  /* Subtle motion tokens */
+  --motion-fast: 150ms;
+  --motion-base: 240ms;
+  --motion-slow: 360ms;
+  --ease-editorial: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Sticky header height & anchor scroll offset */
+  --header-height: 4rem;
+  --scroll-offset: calc(var(--header-height) + 1.5rem);
+
+  color-scheme: light;
+}
+
+@media (min-width: 768px) {
+  :root,
+  [data-theme="light"],
+  [data-theme="dark"] {
+    --header-height: 4.5rem;
+    --scroll-offset: calc(var(--header-height) + 1.75rem);
+  }
+}
+
+.dark,
+[data-theme="dark"] {
+  --color-background: #1A1815;
+  --color-background-rgb: 26 24 21;
+  --color-surface: #242220;
+  --color-surface-rgb: 36 34 32;
+  --color-text-primary: #EDE7DA;
+  --color-text-primary-rgb: 237 231 218;
+  --color-text-muted: #9A9284;
+  --color-text-muted-rgb: 154 146 132;
+  --color-accent: #D2691E;
+  --color-accent-rgb: 210 105 30;
+  --color-secondary: #4A6B5C;
+  --color-secondary-rgb: 74 107 92;
+
+  /* Editorial hairline dividers derived strictly from dark primary text tone */
+  --color-border: rgba(237, 231, 218, 0.12);
+  --color-border-strong: rgba(237, 231, 218, 0.24);
+
+  color-scheme: dark;
+}
+
+/* ==========================================================================
+   BASE DOCUMENT & SEMANTIC DEFAULTS
+   ========================================================================== */
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    border-color: var(--color-border);
+  }
+
+  html {
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
+    font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+    overflow-x: clip;
+  }
+
+  section[id],
+  main [id] {
+    scroll-margin-top: var(--scroll-offset);
+  }
+
+  body {
+    min-height: 100dvh;
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
+    margin: 0;
+    overflow-x: clip;
+    transition:
+      background-color var(--motion-base) var(--ease-editorial),
+      color var(--motion-base) var(--ease-editorial);
+  }
+
+  /* Major display headings default to DM Serif Display */
+  h1,
+  h2,
+  h3,
+  .font-display {
+    font-family: var(--font-display), Georgia, serif;
+    font-weight: 400;
+    line-height: 1.12;
+    letter-spacing: -0.015em;
+    color: var(--color-text-primary);
+  }
+
+  p {
+    max-width: 65ch;
+  }
+
+  img,
+  video,
+  svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+
+  ::selection {
+    background-color: rgba(210, 105, 30, 0.2);
+    color: var(--color-text-primary);
+  }
+}
+
+/* ==========================================================================
+   RESPONSIVE FLUID TYPOGRAPHY SCALE
+   ========================================================================== */
+
+@layer components {
+  .type-display-hero {
+    font-family: var(--font-display), Georgia, serif;
+    font-size: clamp(2.15rem, 3.8vw + 0.95rem, 4.1rem);
+    line-height: 1.06;
+    letter-spacing: -0.02em;
+  }
+
+  .type-display-section {
+    font-family: var(--font-display), Georgia, serif;
+    font-size: clamp(1.75rem, 2.5vw + 0.85rem, 2.75rem);
+    line-height: 1.14;
+    letter-spacing: -0.015em;
+  }
+
+  .type-display-title {
+    font-family: var(--font-display), Georgia, serif;
+    font-size: clamp(1.25rem, 1.2vw + 0.85rem, 1.65rem);
+    line-height: 1.24;
+  }
+
+  .type-body-lead {
+    font-family: var(--font-sans), system-ui, sans-serif;
+    font-size: clamp(1rem, 0.4vw + 0.9rem, 1.15rem);
+    line-height: 1.65;
+  }
+
+  .type-body {
+    font-family: var(--font-sans), system-ui, sans-serif;
+    font-size: clamp(0.9375rem, 0.2vw + 0.88rem, 1.0625rem);
+    line-height: 1.65;
+  }
+
+  .type-mono-meta {
+    font-family: var(--font-mono), monospace;
+    font-size: 0.75rem;
+    line-height: 1.4;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* Handwritten accent — strictly limited to editorial annotations & callouts */
+  .type-hand-accent {
+    font-family: var(--font-hand), cursive;
+    line-height: 1.2;
+  }
+}
+
+/* ==========================================================================
+   SUBTLE HERO ENTRANCE MOTION (RESPECTS REDUCED MOTION)
+   ========================================================================== */
+
+@keyframes editorialFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-reveal {
+  animation: editorialFadeUp 420ms var(--ease-editorial) both;
+}
+
+.hero-reveal-delayed {
+  animation: editorialFadeUp 480ms var(--ease-editorial) 90ms both;
+}
+
+/* ==========================================================================
+   ACCESSIBILITY & KEYBOARD NAVIGATION FOUNDATION
+   ========================================================================== */
+
+/* Visible keyboard focus ring */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+/* Accessible skip-to-content link */
+.skip-link {
+  position: fixed;
+  top: -100%;
+  left: 1rem;
+  z-index: 100;
+  padding: 0.625rem 1rem;
+  background-color: var(--color-text-primary);
+  color: var(--color-background);
+  font-family: var(--font-mono), monospace;
+  font-size: 0.8125rem;
+  text-decoration: none;
+  border-radius: 0.25rem;
+  transition: top var(--motion-fast) var(--ease-editorial);
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+/* ==========================================================================
+   REDUCED MOTION SUPPORT
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-fast: 0.01ms;
+    --motion-base: 0.01ms;
+    --motion-slow: 0.01ms;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  .hero-reveal,
+  .hero-reveal-delayed {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
