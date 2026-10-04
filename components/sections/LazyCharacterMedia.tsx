@@ -14,11 +14,10 @@ export interface LazyCharacterMediaProps {
 
 /**
  * Phase 16B — Viewport-Lazy Character Motion Component
- * - Renders ONLY the static PNG fallback during SSR and initial page load.
- * - Never downloads the MP4 for `prefers-reduced-motion: reduce` users.
- * - Uses IntersectionObserver (`rootMargin: "240px 0px"`) to attach and play
- *   the muted looping MP4 only when the section approaches the viewport.
- * - Preserves explicit 3:2 aspect ratio to guarantee zero CLS.
+ * - Normal mode: renders ONLY the muted looping MP4 (lazy-mounted via IntersectionObserver
+ *   when within 240px of the viewport) inside a fixed 3:2 frame for zero CLS.
+ * - Reduced-motion or video-error mode: renders ONLY the static PNG fallback.
+ * - Video and fallback PNG are strictly mutually exclusive (never stacked or crossfaded).
  */
 export function LazyCharacterMedia({
   videoSrc,
@@ -32,24 +31,17 @@ export function LazyCharacterMedia({
   const containerRef = useRef<HTMLDivElement | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(true);
-  const [motionChecked, setMotionChecked] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
   const [isInViewport, setIsInViewport] = useState(false);
-  const [videoReady, setVideoReady] = useState(false);
   const [videoFailed, setVideoFailed] = useState(false);
 
-  // 1. Check prefers-reduced-motion on client before allowing any video network request
+  // 1. Detect prefers-reduced-motion on client
   useEffect(() => {
-    if (typeof window === "undefined" || !window.matchMedia) {
-      setPrefersReducedMotion(false);
-      setMotionChecked(true);
-      return;
-    }
+    if (typeof window === "undefined" || !window.matchMedia) return;
 
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     setPrefersReducedMotion(mediaQuery.matches);
-    setMotionChecked(true);
 
     function handleChange(event: MediaQueryListEvent) {
       setPrefersReducedMotion(event.matches);
@@ -63,7 +55,7 @@ export function LazyCharacterMedia({
 
   // 2. Observe viewport proximity (only if motion is allowed and video hasn't failed)
   useEffect(() => {
-    if (!motionChecked || prefersReducedMotion || videoFailed) return;
+    if (prefersReducedMotion || videoFailed) return;
     const targetEl = containerRef.current;
     if (!targetEl) return;
 
@@ -94,7 +86,7 @@ export function LazyCharacterMedia({
     return () => {
       observer.disconnect();
     };
-  }, [motionChecked, prefersReducedMotion, videoFailed]);
+  }, [prefersReducedMotion, videoFailed]);
 
   // 3. Control playback when video is mounted and entering/leaving viewport
   useEffect(() => {
@@ -106,38 +98,29 @@ export function LazyCharacterMedia({
     videoEl.muted = true;
 
     if (isInViewport) {
-      if (videoEl.readyState >= 2) {
-        setVideoReady(true);
-      }
       const playPromise = videoEl.play();
       if (playPromise !== undefined) {
-        playPromise
-          .then(() => {
-            setVideoReady(true);
-          })
-          .catch(() => {
-            // Keep static PNG visible if autoplay is blocked or fails
-          });
+        playPromise.catch(() => {
+          // If playback/decoding fails while in viewport, fall back to static PNG
+          if (videoEl.error) {
+            setVideoFailed(true);
+          }
+        });
       }
     } else {
       videoEl.pause();
     }
   }, [shouldLoadVideo, isInViewport, prefersReducedMotion, videoFailed]);
 
-  const canRenderVideo =
-    motionChecked && !prefersReducedMotion && !videoFailed && shouldLoadVideo;
+  const shouldUseFallbackImage = prefersReducedMotion || videoFailed;
 
-  const mediaState = !motionChecked
-    ? "image-poster-active"
-    : prefersReducedMotion
-      ? "reduced-motion-fallback"
-      : videoFailed
-        ? "video-error-fallback"
-        : videoReady
-          ? "video-playing"
-          : shouldLoadVideo
-            ? "video-loading"
-            : "lazy-idle";
+  const mediaState = prefersReducedMotion
+    ? "reduced-motion-fallback"
+    : videoFailed
+      ? "video-error-fallback"
+      : shouldLoadVideo
+        ? "video-playing"
+        : "lazy-idle";
 
   return (
     <figure className={`w-full ${className}`.trim()}>
@@ -146,37 +129,29 @@ export function LazyCharacterMedia({
         data-media-state={mediaState}
         className="relative aspect-[3/2] w-full overflow-hidden rounded-[4px] border border-border bg-surface"
       >
-        {/* Base Layer: Approved static PNG fallback (always present, zero CLS) */}
-        <img
-          src={fallbackImageSrc}
-          alt={alt}
-          width={1536}
-          height={1024}
-          loading="lazy"
-          decoding="async"
-          className={`block h-full w-full object-cover object-center ${imageScaleClassName}`.trim()}
-        />
-
-        {/* Top Layer: Lazy-mounted motion video when near viewport */}
-        {canRenderVideo && (
+        {shouldUseFallbackImage ? (
+          <img
+            src={fallbackImageSrc}
+            alt={alt}
+            width={1536}
+            height={1024}
+            loading="lazy"
+            decoding="async"
+            className={`block h-full w-full object-cover object-center ${imageScaleClassName}`.trim()}
+          />
+        ) : shouldLoadVideo ? (
           <video
             ref={videoRef}
             src={videoSrc}
-            poster={fallbackImageSrc}
             muted
             autoPlay
             loop
             playsInline
             preload="metadata"
-            aria-hidden="true"
+            aria-label={alt}
             tabIndex={-1}
-            onLoadedData={() => setVideoReady(true)}
-            onCanPlay={() => setVideoReady(true)}
-            onPlaying={() => setVideoReady(true)}
             onError={() => setVideoFailed(true)}
-            className={`absolute inset-0 block h-full w-full object-cover object-center transition-opacity duration-300 ${imageScaleClassName} ${
-              videoReady ? "opacity-100" : "opacity-0"
-            }`.trim()}
+            className={`block h-full w-full object-cover object-center ${imageScaleClassName}`.trim()}
           >
             <source
               src={videoSrc}
@@ -184,7 +159,7 @@ export function LazyCharacterMedia({
               onError={() => setVideoFailed(true)}
             />
           </video>
-        )}
+        ) : null}
       </div>
 
       {(eyebrow || caption) && (

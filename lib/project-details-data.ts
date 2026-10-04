@@ -22,6 +22,16 @@ export interface ProjectDetailThinkingPillar {
   readonly description: string;
 }
 
+export interface ProjectDetailFigure {
+  readonly figureNumber: string;
+  readonly title: string;
+  readonly caption: string;
+  readonly imageSrc: string;
+  readonly imageAlt: string;
+  readonly width: number;
+  readonly height: number;
+}
+
 export interface ProjectDetailBuildArea {
   readonly index: string;
   readonly title: string;
@@ -77,6 +87,7 @@ export interface ProjectDetailCaseStudy {
     readonly heading: string;
     readonly lead: string;
     readonly areas: readonly ProjectDetailBuildArea[];
+    readonly figures?: readonly ProjectDetailFigure[];
   };
   readonly technicalDecisions: {
     readonly sectionLabel: string;
@@ -259,6 +270,30 @@ export const NEXCIVIC_CASE_STUDY: ProjectDetailCaseStudy = {
           "Field Inspector view surfaces district-assigned complaints, route context, status progression controls, and before/after photo upload workflows.",
           "Municipality HQ dashboard provides state and district filtering, complaint trend charts, SLA and priority breakdowns, and final review controls for inspector recommendations.",
         ],
+      },
+    ],
+    figures: [
+      {
+        figureNumber: "FIGURE 01",
+        title: "CITIZEN GRIEVANCE REPORTING & GEOSPATIAL TRIAGE",
+        caption:
+          "Production citizen submission flow integrating category classification across ten municipal areas, priority severity tiers, real-time GPS telemetry with embedded Leaflet locator, and supporting photo evidence uploads.",
+        imageSrc: "/assets/projects/nexcivic/figure-01-reporting.png",
+        imageAlt:
+          "NexCivic citizen grievance reporting interface with GPS telemetry map, category selector, severity tiers, and incident description",
+        width: 2880,
+        height: 1920,
+      },
+      {
+        figureNumber: "FIGURE 02",
+        title: "TELANGANA STATE COMMAND CENTER & REDRESSAL BOARD",
+        caption:
+          "State-level operational dashboard displaying real-time grievance tracking across 72 Urban Local Bodies (ULBs), incident clustering, resolution rate telemetry, and municipal master records.",
+        imageSrc: "/assets/projects/nexcivic/figure-02-command-center.png",
+        imageAlt:
+          "NexCivic Telangana State Command Center dashboard showing 148,497 grievances, Leaflet incident coverage map, and 72 ULB municipal master list",
+        width: 2880,
+        height: 1800,
       },
     ],
   },
@@ -534,6 +569,41 @@ export const NEXUS_CASE_STUDY: ProjectDetailCaseStudy = {
           "Warden mode provides a dedicated publishing workflow for residential updates separated into Girls' Hostels and Boys' Hostels.",
           "Students browse dedicated Courses, Hostels, and Events tabs, enroll or log event interest in one tap, and receive live toast and panel notifications.",
         ],
+      },
+    ],
+    figures: [
+      {
+        figureNumber: "FIGURE 01",
+        title: "STUDENT CLASSROOM FEEDBACK & DIRECT QUERY",
+        caption:
+          "Live student comprehension interface featuring the three-state understanding pulse check (On Track, Need a Refresh, Help! I'm Stuck), active lesson indicator, and anonymous direct educator query input.",
+        imageSrc: "/assets/projects/nexus/figure-01-classroom.png",
+        imageAlt:
+          "Nexus Virtual Classroom student view showing active lesson topic, 3-state comprehension pulse check, and anonymous direct query form",
+        width: 2880,
+        height: 1800,
+      },
+      {
+        figureNumber: "FIGURE 02",
+        title: "EDUCATOR CLASSROOM INTEL & SENTIMENT BREAKDOWN",
+        caption:
+          "Educator analytics console displaying active curriculum topics, Recharts donut breakdown of aggregated student comprehension states, and the real-time shared student questions feed.",
+        imageSrc: "/assets/projects/nexus/figure-02-analytics.png",
+        imageAlt:
+          "Nexus Educator Classroom Intel console with Recharts feedback breakdown donut chart and shared student data stream",
+        width: 2880,
+        height: 1800,
+      },
+      {
+        figureNumber: "FIGURE 03",
+        title: "CAMPUS REACH & EDUCATOR OVERVIEW",
+        caption:
+          "Educator home overview tracking verified campus reach (450+ students across MVGR classrooms), student sentiment pulse, and scheduled mentorship sessions.",
+        imageSrc: "/assets/projects/nexus/figure-03-educator-dashboard.png",
+        imageAlt:
+          "Nexus Educator Dashboard showing campus reach metrics, sentiment pulse, and live session tracker",
+        width: 2880,
+        height: 1800,
       },
     ],
   },

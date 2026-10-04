@@ -19,7 +19,7 @@ export const SKILLS_SECTION_DATA = {
     {
       index: "01",
       category: "PROGRAMMING",
-      items: ["C++", "Python", "JavaScript", "SQL"],
+      items: ["C++", "Python", "JavaScript", "TypeScript", "SQL"],
     },
     {
       index: "02",

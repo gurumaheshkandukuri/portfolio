@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { Container } from "@/components/layout/Container";
 import { LazyCharacterMedia } from "@/components/sections/LazyCharacterMedia";
+import { MagneticWrap, ScrollReveal } from "@/components/ui/ScrollReveal";
 import { PUBLIC_SECTION_ASSETS } from "@/lib/assets";
 import {
   SELECTED_WORK_PROJECTS,
@@ -14,71 +15,77 @@ function ProjectActionLinks({ project }: { readonly project: SelectedWorkProject
     <div className="flex flex-wrap items-center gap-4 pt-2">
       {project.links.caseStudy ? (
         <>
-          <Link
-            href={project.links.caseStudy}
-            className="group/link inline-flex min-h-[40px] items-center gap-2 rounded-[4px] border border-accent bg-accent px-4 py-2 font-mono text-xs font-medium tracking-[0.08em] text-[#F5F1E8] transition-colors duration-fast hover:bg-accent/90"
-          >
-            <span>VIEW PROJECT</span>
-            <ArrowRight
-              className="h-3.5 w-3.5 transition-transform duration-fast group-hover/link:translate-x-0.5"
-              aria-hidden="true"
-            />
-          </Link>
+          <MagneticWrap>
+            <Link
+              href={project.links.caseStudy}
+              className="editorial-cta group/link inline-flex min-h-[40px] items-center gap-2 rounded-[4px] border border-accent bg-accent px-4 py-2 font-mono text-xs font-medium tracking-[0.08em] text-[#F5F1E8] transition-colors duration-fast hover:bg-accent/90"
+            >
+              <span>VIEW PROJECT</span>
+              <ArrowRight
+                className="editorial-cta-arrow h-3.5 w-3.5"
+                aria-hidden="true"
+              />
+            </Link>
+          </MagneticWrap>
 
           <a
             href={project.links.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="group/git inline-flex min-h-[40px] items-center gap-1.5 border-b border-border-strong py-1 font-mono text-xs tracking-[0.08em] text-foreground transition-colors duration-fast hover:border-accent hover:text-accent"
+            className="editorial-cta-ext group/git inline-flex min-h-[40px] items-center gap-1.5 border-b border-border-strong py-1 font-mono text-xs tracking-[0.08em] text-foreground transition-colors duration-fast hover:border-accent hover:text-accent"
           >
             <span>GITHUB</span>
             <ArrowUpRight
-              className="h-3.5 w-3.5 text-muted transition-transform duration-fast group-hover/git:-translate-y-0.5 group-hover/git:translate-x-0.5 group-hover/git:text-accent"
+              className="editorial-cta-arrow h-3.5 w-3.5 text-muted group-hover/git:text-accent"
               aria-hidden="true"
             />
           </a>
         </>
       ) : project.links.live ? (
         <>
-          <a
-            href={project.links.live}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group/link inline-flex min-h-[40px] items-center gap-2 rounded-[4px] border border-accent bg-accent px-4 py-2 font-mono text-xs font-medium tracking-[0.08em] text-[#F5F1E8] transition-colors duration-fast hover:bg-accent/90"
-          >
-            <span>VIEW PROJECT</span>
-            <ArrowRight
-              className="h-3.5 w-3.5 transition-transform duration-fast group-hover/link:translate-x-0.5"
-              aria-hidden="true"
-            />
-          </a>
+          <MagneticWrap>
+            <a
+              href={project.links.live}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="editorial-cta group/link inline-flex min-h-[40px] items-center gap-2 rounded-[4px] border border-accent bg-accent px-4 py-2 font-mono text-xs font-medium tracking-[0.08em] text-[#F5F1E8] transition-colors duration-fast hover:bg-accent/90"
+            >
+              <span>VIEW PROJECT</span>
+              <ArrowRight
+                className="editorial-cta-arrow h-3.5 w-3.5"
+                aria-hidden="true"
+              />
+            </a>
+          </MagneticWrap>
 
           <a
             href={project.links.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="group/git inline-flex min-h-[40px] items-center gap-1.5 border-b border-border-strong py-1 font-mono text-xs tracking-[0.08em] text-foreground transition-colors duration-fast hover:border-accent hover:text-accent"
+            className="editorial-cta-ext group/git inline-flex min-h-[40px] items-center gap-1.5 border-b border-border-strong py-1 font-mono text-xs tracking-[0.08em] text-foreground transition-colors duration-fast hover:border-accent hover:text-accent"
           >
             <span>GITHUB</span>
             <ArrowUpRight
-              className="h-3.5 w-3.5 text-muted transition-transform duration-fast group-hover/git:-translate-y-0.5 group-hover/git:translate-x-0.5 group-hover/git:text-accent"
+              className="editorial-cta-arrow h-3.5 w-3.5 text-muted group-hover/git:text-accent"
               aria-hidden="true"
             />
           </a>
         </>
       ) : (
-        <a
-          href={project.links.github}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="group/link inline-flex min-h-[40px] items-center gap-2 rounded-[4px] border border-border-strong bg-transparent px-4 py-2 font-mono text-xs font-medium tracking-[0.08em] text-foreground transition-colors duration-fast hover:border-accent hover:bg-surface/70"
-        >
-          <span>VIEW PROJECT</span>
-          <ArrowUpRight
-            className="h-3.5 w-3.5 text-muted transition-transform duration-fast group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5 group-hover/link:text-accent"
-            aria-hidden="true"
-          />
-        </a>
+        <MagneticWrap>
+          <a
+            href={project.links.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="editorial-cta editorial-cta-ext group/link inline-flex min-h-[40px] items-center gap-2 rounded-[4px] border border-border-strong bg-transparent px-4 py-2 font-mono text-xs font-medium tracking-[0.08em] text-foreground transition-colors duration-fast hover:border-accent hover:bg-surface/70"
+          >
+            <span>VIEW PROJECT</span>
+            <ArrowUpRight
+              className="editorial-cta-arrow h-3.5 w-3.5 text-muted group-hover/link:text-accent"
+              aria-hidden="true"
+            />
+          </a>
+        </MagneticWrap>
       )}
     </div>
   );
@@ -96,12 +103,19 @@ export function SelectedWork() {
       <Container>
         {/* Editorial Section Index Line */}
         <div className="mb-8 flex items-center gap-4 md:mb-10">
-          <span className="type-mono-meta text-muted">04 / SELECTED WORK</span>
-          <span className="h-px flex-1 bg-border" aria-hidden="true" />
+          <ScrollReveal as="span" className="type-mono-meta text-muted">
+            04 / SELECTED WORK
+          </ScrollReveal>
+          <ScrollReveal
+            as="span"
+            variant="line-draw"
+            className="h-px flex-1 bg-border"
+            aria-hidden="true"
+          />
         </div>
 
         {/* Section Heading & Supporting Statement */}
-        <div className="mb-8 grid grid-cols-1 items-end gap-4 md:mb-11 lg:grid-cols-12 lg:gap-8">
+        <ScrollReveal className="mb-8 grid grid-cols-1 items-end gap-4 md:mb-11 lg:grid-cols-12 lg:gap-8">
           <div className="lg:col-span-7">
             <h2
               id="selected-work-heading"
@@ -115,20 +129,22 @@ export function SelectedWork() {
               A few things I&apos;ve built, led, and contributed to.
             </p>
           </div>
-        </div>
+        </ScrollReveal>
 
         {/* Asymmetric 12-Column Editorial Sequence (No Generic Card Grid) */}
         <div className="divide-y divide-border border-t border-b border-border">
           {/* ==============================================================
               01 / NEXCIVIC — Lead Feature Split (3 / 5 / 4 Columns)
              ============================================================== */}
-          <article
+          <ScrollReveal
+            as="article"
+            delayMs={0}
             data-project-slug={nexcivic.slug}
-            className="group grid grid-cols-1 gap-6 py-8 sm:py-9 lg:grid-cols-12 lg:items-start lg:gap-10 lg:py-11"
+            className="editorial-ledger-row group grid grid-cols-1 gap-6 py-8 sm:py-9 lg:grid-cols-12 lg:items-start lg:gap-10 lg:py-11"
           >
             {/* Col 1-3: Project Number & Role */}
             <div className="flex items-baseline justify-between gap-4 lg:col-span-3 lg:flex-col lg:items-start lg:justify-start lg:gap-4">
-              <span className="font-display text-3xl leading-none text-accent transition-transform duration-fast group-hover:translate-x-0.5 sm:text-4xl">
+              <span className="editorial-row-index font-display text-3xl leading-none text-accent sm:text-4xl">
                 {nexcivic.index}
               </span>
               <div>
@@ -143,7 +159,7 @@ export function SelectedWork() {
 
             {/* Col 4-8: Title, Subtitle & Description */}
             <div className="lg:col-span-5">
-              <h3 className="font-display text-2xl leading-tight text-foreground sm:text-3xl">
+              <h3 className="editorial-row-title font-display text-2xl leading-tight text-foreground sm:text-3xl">
                 {nexcivic.title}
               </h3>
               <p className="mt-1 font-display text-lg italic text-accent">
@@ -177,7 +193,7 @@ export function SelectedWork() {
                   {nexcivic.technologies.map((tech) => (
                     <li
                       key={tech}
-                      className="rounded-[3px] border border-border bg-surface/60 px-2.5 py-1 font-mono text-[11px] tracking-[0.03em] text-foreground"
+                      className="rounded-[3px] border border-border bg-surface/60 px-2.5 py-1 font-mono text-[11px] tracking-[0.03em] text-foreground transition-colors duration-fast"
                     >
                       {tech}
                     </li>
@@ -187,18 +203,20 @@ export function SelectedWork() {
 
               <ProjectActionLinks project={nexcivic} />
             </div>
-          </article>
+          </ScrollReveal>
 
           {/* ==============================================================
               02 / NEXUS — Offset Editorial Composition (2 / 4 / 6 Columns)
              ============================================================== */}
-          <article
+          <ScrollReveal
+            as="article"
+            delayMs={65}
             data-project-slug={nexus.slug}
-            className="group grid grid-cols-1 gap-6 py-8 sm:py-9 lg:grid-cols-12 lg:items-start lg:gap-10 lg:py-11"
+            className="editorial-ledger-row group grid grid-cols-1 gap-6 py-8 sm:py-9 lg:grid-cols-12 lg:items-start lg:gap-10 lg:py-11"
           >
             {/* Col 1-2: Project Number & Role */}
             <div className="order-1 flex items-baseline justify-between gap-4 lg:col-span-2 lg:flex-col lg:items-start lg:justify-start lg:gap-4">
-              <span className="font-display text-3xl leading-none text-accent transition-transform duration-fast group-hover:translate-x-0.5 sm:text-4xl">
+              <span className="editorial-row-index font-display text-3xl leading-none text-accent sm:text-4xl">
                 {nexus.index}
               </span>
               <div>
@@ -213,7 +231,7 @@ export function SelectedWork() {
 
             {/* Primary Narrative (Order 2 on Mobile, Right Cols 7-12 on Desktop) */}
             <div className="order-2 lg:order-3 lg:col-span-6 lg:border-l lg:border-border lg:pl-8">
-              <h3 className="font-display text-2xl leading-tight text-foreground sm:text-3xl">
+              <h3 className="editorial-row-title font-display text-2xl leading-tight text-foreground sm:text-3xl">
                 {nexus.title}
               </h3>
               <p className="mt-1 font-display text-lg italic text-accent">
@@ -247,7 +265,7 @@ export function SelectedWork() {
                   {nexus.technologies.map((tech) => (
                     <li
                       key={tech}
-                      className="rounded-[3px] border border-border bg-surface/60 px-2.5 py-1 font-mono text-[11px] tracking-[0.03em] text-foreground"
+                      className="rounded-[3px] border border-border bg-surface/60 px-2.5 py-1 font-mono text-[11px] tracking-[0.03em] text-foreground transition-colors duration-fast"
                     >
                       {tech}
                     </li>
@@ -257,19 +275,21 @@ export function SelectedWork() {
 
               <ProjectActionLinks project={nexus} />
             </div>
-          </article>
+          </ScrollReveal>
 
           {/* ==============================================================
               03 / INTENTIX — Asymmetric Two-Column Case Preview (5 / 7 Columns)
              ============================================================== */}
-          <article
+          <ScrollReveal
+            as="article"
+            delayMs={130}
             data-project-slug={intentix.slug}
-            className="group grid grid-cols-1 gap-6 py-8 sm:py-9 lg:grid-cols-12 lg:items-start lg:gap-10 lg:py-11"
+            className="editorial-ledger-row group grid grid-cols-1 gap-6 py-8 sm:py-9 lg:grid-cols-12 lg:items-start lg:gap-10 lg:py-11"
           >
             {/* Col 1-5: Number, Title, Subtitle & Role */}
             <div className="lg:col-span-5">
               <div className="flex items-baseline justify-between gap-4 lg:mb-4">
-                <span className="font-display text-3xl leading-none text-accent transition-transform duration-fast group-hover:translate-x-0.5 sm:text-4xl">
+                <span className="editorial-row-index font-display text-3xl leading-none text-accent sm:text-4xl">
                   {intentix.index}
                 </span>
                 <div>
@@ -282,7 +302,7 @@ export function SelectedWork() {
                 </div>
               </div>
 
-              <h3 className="mt-4 font-display text-2xl leading-tight text-foreground sm:text-3xl lg:mt-0">
+              <h3 className="editorial-row-title mt-4 font-display text-2xl leading-tight text-foreground sm:text-3xl lg:mt-0">
                 {intentix.title}
               </h3>
               <p className="mt-1 font-display text-lg italic text-accent">
@@ -317,7 +337,7 @@ export function SelectedWork() {
                     {intentix.technologies.map((tech) => (
                       <li
                         key={tech}
-                        className="rounded-[3px] border border-border bg-surface/60 px-2.5 py-1 font-mono text-[11px] tracking-[0.03em] text-foreground"
+                        className="rounded-[3px] border border-border bg-surface/60 px-2.5 py-1 font-mono text-[11px] tracking-[0.03em] text-foreground transition-colors duration-fast"
                       >
                         {tech}
                       </li>
@@ -328,13 +348,15 @@ export function SelectedWork() {
                 <ProjectActionLinks project={intentix} />
               </div>
             </div>
-          </article>
+          </ScrollReveal>
         </div>
 
         {/* ==============================================================
             CLOSING EDITORIAL VISUAL — Problem Solving & System Thinking
            ============================================================== */}
-        <aside
+        <ScrollReveal
+          as="aside"
+          delayMs={100}
           aria-label="Engineering problem-solving perspective"
           className="mt-8 grid grid-cols-1 items-center gap-6 lg:mt-10 lg:grid-cols-12 lg:gap-10"
         >
@@ -359,7 +381,7 @@ export function SelectedWork() {
               className="max-w-[340px] sm:max-w-[380px] lg:max-w-[400px]"
             />
           </div>
-        </aside>
+        </ScrollReveal>
       </Container>
     </section>
   );

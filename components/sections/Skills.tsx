@@ -1,5 +1,6 @@
 import React from "react";
 import { Container } from "@/components/layout/Container";
+import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { PUBLIC_SECTION_ASSETS } from "@/lib/assets";
 import { SKILLS_SECTION_DATA } from "@/lib/skills-data";
 
@@ -13,16 +14,21 @@ export function Skills() {
       <Container>
         {/* Editorial Section Index Line */}
         <div className="mb-8 flex items-center gap-4 md:mb-10">
-          <span className="type-mono-meta text-muted">
+          <ScrollReveal as="span" className="type-mono-meta text-muted">
             {SKILLS_SECTION_DATA.sectionLabel}
-          </span>
-          <span className="h-px flex-1 bg-border" aria-hidden="true" />
+          </ScrollReveal>
+          <ScrollReveal
+            as="span"
+            variant="line-draw"
+            className="h-px flex-1 bg-border"
+            aria-hidden="true"
+          />
         </div>
 
         {/* Asymmetric 12-Column Editorial Split */}
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:items-start lg:gap-10">
           {/* LEFT COLUMN (Cols 1-4): Heading, Supporting Copy & Secondary Learning Visual */}
-          <div className="lg:col-span-4">
+          <ScrollReveal className="lg:col-span-4">
             <h2
               id="skills-heading"
               className="type-display-section text-foreground"
@@ -55,19 +61,20 @@ export function Skills() {
                 </span>
               </figcaption>
             </figure>
-          </div>
+          </ScrollReveal>
 
           {/* RIGHT COLUMN (Cols 5-12): Grouped Technical Inventory */}
           <div className="lg:col-span-8 lg:border-l lg:border-border lg:pl-12">
             <dl className="divide-y divide-border border-t border-b border-border">
-              {SKILLS_SECTION_DATA.groups.map((group) => (
-                <div
+              {SKILLS_SECTION_DATA.groups.map((group, groupIdx) => (
+                <ScrollReveal
                   key={group.category}
-                  className="grid grid-cols-1 gap-3 py-6 sm:grid-cols-12 sm:items-baseline sm:gap-6 sm:py-7"
+                  delayMs={groupIdx * 65}
+                  className="editorial-ledger-row grid grid-cols-1 gap-3 py-6 sm:grid-cols-12 sm:items-baseline sm:gap-6 sm:py-7"
                 >
                   {/* Category Index & Mono Label */}
                   <dt className="flex items-baseline gap-2.5 sm:col-span-5">
-                    <span className="font-mono text-[11px] font-medium tracking-[0.08em] text-accent">
+                    <span className="editorial-row-index font-mono text-[11px] font-medium tracking-[0.08em] text-accent">
                       {group.index}
                     </span>
                     <span className="font-mono text-xs tracking-[0.08em] uppercase text-muted">
@@ -101,7 +108,7 @@ export function Skills() {
                       ))}
                     </ul>
                   </dd>
-                </div>
+                </ScrollReveal>
               ))}
             </dl>
           </div>

@@ -1,5 +1,6 @@
 import React from "react";
 import { Container } from "@/components/layout/Container";
+import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { QUICK_PROOF_ITEMS } from "@/lib/currently-building-data";
 
 export function QuickProof() {
@@ -12,10 +13,19 @@ export function QuickProof() {
       <Container>
         {/* Subtle Editorial Index Header */}
         <div className="mb-6 flex items-center gap-4 md:mb-8">
-          <h2 id="quick-proof-heading" className="type-mono-meta text-muted">
+          <ScrollReveal
+            as="h2"
+            id="quick-proof-heading"
+            className="type-mono-meta text-muted"
+          >
             02 / QUICK PROOF
-          </h2>
-          <span className="h-px flex-1 bg-border" aria-hidden="true" />
+          </ScrollReveal>
+          <ScrollReveal
+            as="span"
+            variant="line-draw"
+            className="h-px flex-1 bg-border"
+            aria-hidden="true"
+          />
         </div>
 
         {/* Structured Horizontal / Grid Editorial Proof Band (No Generic Cards) */}
@@ -32,13 +42,14 @@ export function QuickProof() {
                     : "";
 
             return (
-              <div
+              <ScrollReveal
                 key={item.index}
-                className={`flex flex-col justify-between py-5 sm:p-6 lg:py-7 lg:first:pl-0 lg:last:pr-0 ${tabletBorderClasses}`}
+                delayMs={idx * 65}
+                className={`editorial-ledger-row flex flex-col justify-between py-5 sm:p-6 lg:py-7 lg:first:pl-0 lg:last:pr-0 ${tabletBorderClasses}`}
               >
                 {/* Top Mono Index + Category Label */}
                 <dt className="mb-3 flex items-center justify-between gap-2">
-                  <span className="font-mono text-[11px] font-medium tracking-[0.08em] text-accent">
+                  <span className="editorial-row-index font-mono text-[11px] font-medium tracking-[0.08em] text-accent">
                     {item.index}
                   </span>
                   <span className="font-mono text-[11px] tracking-[0.08em] text-muted">
@@ -49,7 +60,7 @@ export function QuickProof() {
                 {/* Primary Factual Value & Supporting Context */}
                 <dd className="m-0">
                   <div className="font-display text-2xl leading-tight tracking-tight text-foreground sm:text-[1.7rem] xl:text-[1.9rem]">
-                    <span className="block">{item.value}</span>
+                    <span className="editorial-row-title block">{item.value}</span>
                     <span className="block text-xl text-foreground/90 sm:text-2xl">
                       {item.title}
                     </span>
@@ -58,7 +69,7 @@ export function QuickProof() {
                     {item.detail}
                   </p>
                 </dd>
-              </div>
+              </ScrollReveal>
             );
           })}
         </dl>

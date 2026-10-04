@@ -21,6 +21,6 @@ export const EXPERIENCE_ENTRIES: readonly ExperienceEntry[] = [
     status: "CURRENT",
     roleType: "INTERNSHIP",
     summary:
-      "Currently working as a Web Development Intern at Netmaxin Group.",
+      "Currently working as a Web Development Intern at Netmaxin Group, gaining hands-on experience building and improving web solutions in a real development environment.",
   },
 ] as const;

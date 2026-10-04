@@ -80,7 +80,7 @@ export function Header() {
         <a
           href="/#top"
           onClick={() => setMobileMenuOpen(false)}
-          className="group inline-flex items-baseline gap-1.5 font-display text-lg tracking-tight text-accent transition-opacity duration-fast hover:opacity-85 md:text-xl"
+          className="group inline-flex items-baseline gap-1.5 whitespace-nowrap font-display text-lg tracking-tight text-accent transition-opacity duration-fast hover:opacity-85 md:text-xl"
           aria-label="Guru Mahesh Kandukuri — Home"
         >
           <span>GURU</span>{" "}
@@ -102,16 +102,16 @@ export function Header() {
                     target={item.external ? "_blank" : undefined}
                     rel={item.external ? "noopener noreferrer" : undefined}
                     aria-current={isActive ? "page" : undefined}
-                    className={`relative inline-flex items-center gap-1 py-1 font-mono text-xs tracking-[0.08em] transition-colors duration-fast ${
+                    className={`editorial-nav-link group/nav relative inline-flex items-center gap-1 py-1 font-mono text-xs tracking-[0.08em] transition-colors duration-fast ${
                       isActive
-                        ? "font-medium text-foreground after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-accent"
+                        ? "font-medium text-foreground after:absolute after:bottom-0 after:left-0 after:h-[1.5px] after:w-full after:bg-accent"
                         : "text-muted hover:text-foreground"
                     }`}
                   >
                     <span>{item.label}</span>
                     {item.external && (
                       <ArrowUpRight
-                        className="h-3 w-3 text-muted"
+                        className="h-3 w-3 text-muted transition-transform duration-fast group-hover/nav:-translate-y-0.5 group-hover/nav:translate-x-0.5 group-hover/nav:text-accent"
                         aria-hidden="true"
                       />
                     )}
@@ -129,7 +129,7 @@ export function Header() {
           {/* Final CONTACT Action */}
           <a
             href={HEADER_CONTACT_ACTION.href}
-            className="inline-flex items-center gap-1 py-1 font-mono text-xs font-medium tracking-[0.08em] text-accent transition-colors duration-fast hover:text-foreground"
+            className="editorial-nav-link inline-flex items-center gap-1 py-1 font-mono text-xs font-medium tracking-[0.08em] text-accent transition-colors duration-fast hover:text-foreground"
           >
             <span>{HEADER_CONTACT_ACTION.label}</span>
           </a>

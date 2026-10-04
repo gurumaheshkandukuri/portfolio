@@ -10,7 +10,6 @@ export function HeroCharacterMedia() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const [videoFailed, setVideoFailed] = useState(false);
-  const [videoReady, setVideoReady] = useState(false);
 
   // 1. Detect prefers-reduced-motion
   useEffect(() => {
@@ -38,21 +37,12 @@ export function HeroCharacterMedia() {
     videoEl.defaultMuted = true;
     videoEl.muted = true;
 
-    // If video already buffered enough frames before effect ran
-    if (videoEl.readyState >= 2) {
-      setVideoReady(true);
-    }
-
     const playPromise = videoEl.play();
     if (playPromise !== undefined) {
-      playPromise
-        .then(() => {
-          setVideoReady(true);
-        })
-        .catch(() => {
-          // If autoplay or decoding fails, fall back cleanly to the static PNG
-          setVideoFailed(true);
-        });
+      playPromise.catch(() => {
+        // If autoplay or decoding fails, fall back cleanly to the static PNG
+        setVideoFailed(true);
+      });
     }
   }, [prefersReducedMotion, videoFailed]);
 
@@ -67,42 +57,22 @@ export function HeroCharacterMedia() {
             ? "reduced-motion-fallback"
             : videoFailed
               ? "video-error-fallback"
-              : videoReady
-                ? "video-playing"
-                : "image-poster-active"
+              : "video-playing"
         }
       >
-        {/* Base Layer: Approved static PNG is ALWAYS rendered so the frame is never empty */}
-        <img
-          src={PUBLIC_HERO_ASSETS.heroCharacterFallback}
-          alt={CHARACTER_ALT_TEXT}
-          width={1536}
-          height={1024}
-          loading="eager"
-          decoding="async"
-          className="block h-full w-full object-cover"
-        />
-
-        {/* Top Layer: Approved motion video overlays once decoded and playing */}
-        {shouldRenderVideo && (
+        {shouldRenderVideo ? (
           <video
             ref={videoRef}
             src={PUBLIC_HERO_ASSETS.heroVideo}
-            poster={PUBLIC_HERO_ASSETS.heroCharacterFallback}
             muted
             autoPlay
             loop
             playsInline
             preload="auto"
-            aria-hidden="true"
+            aria-label={CHARACTER_ALT_TEXT}
             tabIndex={-1}
-            onLoadedData={() => setVideoReady(true)}
-            onCanPlay={() => setVideoReady(true)}
-            onPlaying={() => setVideoReady(true)}
             onError={() => setVideoFailed(true)}
-            className={`absolute inset-0 block h-full w-full object-cover transition-opacity duration-300 ${
-              videoReady ? "opacity-100" : "opacity-0"
-            }`}
+            className="block h-full w-full object-cover"
           >
             <source
               src={PUBLIC_HERO_ASSETS.heroVideo}
@@ -110,6 +80,16 @@ export function HeroCharacterMedia() {
               onError={() => setVideoFailed(true)}
             />
           </video>
+        ) : (
+          <img
+            src={PUBLIC_HERO_ASSETS.heroCharacterFallback}
+            alt={CHARACTER_ALT_TEXT}
+            width={1536}
+            height={1024}
+            loading="eager"
+            decoding="async"
+            className="block h-full w-full object-cover"
+          />
         )}
       </div>
 

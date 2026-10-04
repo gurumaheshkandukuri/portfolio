@@ -32,12 +32,12 @@ export function Footer() {
                     href={item.href}
                     target={item.external ? "_blank" : undefined}
                     rel={item.external ? "noopener noreferrer" : undefined}
-                    className="inline-flex items-center gap-1 font-mono text-xs tracking-[0.08em] text-muted transition-colors duration-fast hover:text-foreground"
+                    className="editorial-nav-link editorial-cta-ext inline-flex items-center gap-1 font-mono text-xs tracking-[0.08em] text-muted transition-colors duration-fast hover:text-foreground"
                   >
                     <span>{item.label}</span>
                     {item.external && (
                       <ArrowUpRight
-                        className="h-3 w-3 text-muted"
+                        className="editorial-cta-arrow h-3 w-3 text-muted"
                         aria-hidden="true"
                       />
                     )}
@@ -47,7 +47,7 @@ export function Footer() {
               <li>
                 <a
                   href={HEADER_CONTACT_ACTION.href}
-                  className="font-mono text-xs tracking-[0.08em] text-muted transition-colors duration-fast hover:text-foreground"
+                  className="editorial-nav-link font-mono text-xs tracking-[0.08em] text-muted transition-colors duration-fast hover:text-foreground"
                 >
                   {HEADER_CONTACT_ACTION.label}
                 </a>

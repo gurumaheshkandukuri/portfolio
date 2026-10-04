@@ -30,8 +30,8 @@ export const QUICK_PROOF_ITEMS: readonly QuickProofItem[] = [
   {
     index: "03",
     label: "EDUCATION",
-    value: "B.Tech CSE",
-    title: "(AIML)",
+    value: "9.50 / 10",
+    title: "B.Tech CSE (AIML)",
     detail: "MVGR College of Engineering",
   },
   {
@@ -62,7 +62,7 @@ export const CURRENTLY_BUILDING_DATA = {
       name: "FILLO",
       role: "Lead Developer",
       description:
-        "A privacy-first Chrome browser extension that helps fill repetitive web forms faster using a locally stored user profile.",
+        "A Manifest V3 Chrome extension for fast browser form autofill, engineered with local profile storage and zero cloud backend so personal data remains private on the user's device.",
       technologies: [
         "TypeScript",
         "JavaScript",
@@ -77,7 +77,7 @@ export const CURRENTLY_BUILDING_DATA = {
       name: "TECHNOVA",
       role: "Lead Developer",
       description:
-        "A responsive corporate IT services and solutions website featuring interactive service directories, portfolio filtering, career workflows, and a multi-step project enquiry system.",
+        "A responsive IT services platform featuring structured service discovery, portfolio filtering, and an interactive multi-step project enquiry workflow built on a JavaScript, PHP, and MySQL architecture.",
       technologies: ["HTML5", "CSS3", "JavaScript (ES6+)", "PHP", "MySQL"],
       repoUrl: "https://github.com/gurumaheshkandukuri/TechNova",
     },
@@ -86,7 +86,7 @@ export const CURRENTLY_BUILDING_DATA = {
       name: "SAVY PDF EDITOR",
       role: "Lead Developer",
       description:
-        "A privacy-first, browser-based PDF workspace for editing, organizing, converting, and managing PDF documents locally on the client device.",
+        "A browser-based PDF workspace built with PDF.js and pdf-lib for client-side editing, organizing, and conversion, handling documents locally on the device rather than uploading to a server.",
       technologies: [
         "JavaScript",
         "TypeScript",
